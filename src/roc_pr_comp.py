@@ -18,7 +18,7 @@ def print_roc(y_true,y_predict):
     (fpr, tpr, _)= metrics.roc_curve(y_true,y_predict)
     plt.plot(fpr,tpr)
     plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
     plt.title('ROC curve')
@@ -31,7 +31,7 @@ def print_precision_recall(y_true,y_predict):
     (precision, recall, _)= metrics.precision_recall_curve(y_true,y_predict)
     plt.plot(recall,precision)
     plt.xlim([0.0, 1.0])
-    plt.ylim([0.0, 1.0])
+    plt.ylim([0.0, 1.05])
     plt.xlabel('Recall')
     plt.ylabel('Precision')
     plt.title('Precision-Recall curve')
@@ -78,8 +78,8 @@ if __name__ == '__main__':
     sort_indices = np.argsort(y_predict)[::-1]
     y_true=y_true[sort_indices]
     y_predict=y_predict[sort_indices]
-    default_roc_auc = calc_roc_auc(y_true,y_predict)
-    default_pr_auc = calc_pr_auc(y_true,y_predict)
+    default_roc_auc = print_roc(y_true,y_predict)
+    default_pr_auc = print_precision_recall(y_true,y_predict)
 
     target_indices = generate_frto(len(y_predict),ran=100,skip=5)
     degrad_ratio_roc = []
