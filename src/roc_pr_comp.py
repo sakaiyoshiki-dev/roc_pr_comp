@@ -1,3 +1,12 @@
+"""
+Sensitivity comparison analysis of ROC curves and precision-recall curves.
+Environment:
+    Python 3.4.3
+    numpy 1.9.2
+    scikit-learn 0.16.1
+    matplotlib 1.4.3
+"""
+
 #%matplotlib inline
 from sklearn import datasets, linear_model, metrics
 import matplotlib.pyplot as plt
@@ -73,17 +82,21 @@ def generate_frto(array_length,ran=30,skip=5):
     return frto_list
 
 if __name__ == '__main__':
-    trial = 10
-    y_true,y_predict = predict_boston_data(30)
+    # load dataset and create sample prediction
+    y_true,y_predict = predict_boston_data(30) 
     sort_indices = np.argsort(y_predict)[::-1]
     y_true=y_true[sort_indices]
     y_predict=y_predict[sort_indices]
+
+    # Print ROC and Precision-Recall curves
     default_roc_auc = print_roc(y_true,y_predict)
     default_pr_auc = print_precision_recall(y_true,y_predict)
 
-    target_indices = generate_frto(len(y_predict),ran=100,skip=5)
+    # Analyze AUC sensitivity against partial random shuffling
+    target_indices = generate_frto(len(y_predict),ran=100,skip=5) # shuffle rank 1-100, 6-105, 11-110...
     degrad_ratio_roc = []
     degrad_ratio_pr = []
+    trial = 10 #
     for i,(fr,to) in enumerate(target_indices):
         rocs=[]
         prs=[]
