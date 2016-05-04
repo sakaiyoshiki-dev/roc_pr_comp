@@ -1,4 +1,4 @@
-%matplotlib inline
+#%matplotlib inline
 from sklearn import datasets, linear_model, metrics
 import matplotlib.pyplot as plt
 import numpy as np
